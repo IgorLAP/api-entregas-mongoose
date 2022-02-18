@@ -16,6 +16,10 @@ const PedidoSchema = new Schema({
   status: {
     type: String,
     required: true,
+  },
+  nomeEntregador: {
+    type: String,
+    required: true,
   }
 });
 
