@@ -1,7 +1,22 @@
 const Pedidos = require("./../models/Pedidos");
 
 class PedidoController {
-  static async cadastrar(req, res) {}
+
+    static async cadastrar(req, res){
+        const { nome, dataDesejada, endereco, status, nomeEntregador } = req.body
+
+        const pedido = Pedidos( { nome, dataDesejada, endereco, status, nomeEntregador } )
+
+        if(!nome || !dataDesejada || !endereco ||!status ||!nomeEntregador) {
+            res.status(402).json( { message: 'Campos não preenchidos corretamente'} )
+            return
+        }
+        
+        await pedido.save()    
+
+        res.status(201).json( { message: `Pedido ${nome} cadastrado` } )
+
+    }
 
   static async editar(req, res) {}
 
