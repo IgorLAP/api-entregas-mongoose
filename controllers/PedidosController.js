@@ -63,7 +63,7 @@ class PedidoController {
   static async visualizar(req, res) {
     const pedido = await Pedidos.find().lean();
     if (!pedido) {
-      res.status(402).json({ message: "lista-pedido-nulo" });
+      res.status(402).json({ message: "Pedidos não encontrados" });
       return;
     }
     res.status(202).json(pedido);
@@ -84,7 +84,20 @@ class PedidoController {
       res.json({ message: "Pedido deletado!"})
   }
 
-  static async verStatus(req, res) {}
+  static async verStatus(req, res) {
+        
+        if (!req.body.nomeEntregador) {
+        res.status(402).json({ message: "Nome entregador necessário"})
+      }
+      const nomeEntregador = req.body.nomeEntregador
+
+      const pedido = await Pedidos.findOne({nomeEntregador})
+      if (!pedido) {
+          res.status(406).json({ message: "Não encontramos um pedido associado à esse entregador"})
+      }
+      res.json({nome:pedido.nome , status:pedido.status});
+  }
+
 
   static async attStatus(req, res) {}
 }
