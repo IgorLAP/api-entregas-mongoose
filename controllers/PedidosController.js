@@ -69,7 +69,20 @@ class PedidoController {
     res.status(202).json(pedido);
   }
 
-  static async deletar(req, res) {}
+  static async deletar(req, res) {
+      if (!req.body.id){
+          res.status(402).json({message: "Parâmetro não recebido."})
+          return;
+      }
+      const { id } = req.body
+    const pedido = await Pedidos.findByIdAndDelete(id)
+    if (!pedido){
+        res.status(402).json({message:"Pedido não existente!"})
+        return;
+    }
+
+      res.json({ message: "Pedido deletado!"})
+  }
 
   static async verStatus(req, res) {}
 
