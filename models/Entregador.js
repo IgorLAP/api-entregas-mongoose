@@ -1,10 +1,10 @@
 const { model, Schema } = require("mongoose");
 
-const UserSchema = new Schema({
+const EntregadorSchema = new Schema({
     nome: {
       type: String,
       required: true,
     }
 })
 
-module.exports = model("Entregador", UserSchema);
+module.exports = model("Entregador", EntregadorSchema);
