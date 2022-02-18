@@ -16,15 +16,7 @@ const PedidoSchema = new Schema({
   status: {
     type: String,
     required: true,
-  },
-  entregadorId: {
-    type: String,
-    required: true,
-  },
-  clienteId: {
-    type: String,
-    required: true,
-  },
+  }
 });
 
 module.exports = model("Pedidos", PedidoSchema);
