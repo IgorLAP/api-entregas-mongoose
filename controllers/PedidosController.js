@@ -63,7 +63,7 @@ class PedidoController {
   static async visualizar(req, res) {
     const pedido = await Pedidos.find().lean();
     if (!pedido) {
-      res.status(402).json({ message: "lista-pedido-nulo" });
+      res.status(402).json({ message: "Pedidos não encontrados" });
       return;
     }
     res.status(202).json(pedido);
