@@ -18,7 +18,47 @@ class PedidoController {
 
     }
 
-  static async editar(req, res) {}
+    static async editar(req, res){
+        const { id } = req.body;
+        
+        if(
+            !id ||
+            !req.body.nome ||
+            !req.body.dataDesejada ||
+            !req.body.endereco ||
+            !req.body.status ||
+            !req.body.nomeEntregador
+        ){
+            res.status(402).json({
+                message: `parametro(s)-necessario(s)-nulo(s)`
+            })
+            return;
+        }
+
+        const updatePedido = {
+            nome: req.body.nome,
+            dataDesejada: req.body.dataDesejada,
+            endereco: req.body.endereco,
+            status: req.body.status,
+            nomeEntregador: req.body.nomeEntregador
+        }
+
+        const pedido = await Pedidos.findById(id);
+
+        if(!pedido){
+            res.status(406).json({
+                message: 'pedido-inexistente'
+            })
+            return;
+        }
+
+        await Pedidos.findByIdAndUpdate(id, updatePedido);
+
+        res.json({
+            message: `pedido-${id}-atualizado`,
+            pedido: updatePedido
+        })
+    }
 
   static async visualizar(req, res) {
     const pedido = await Pedidos.find().lean();
