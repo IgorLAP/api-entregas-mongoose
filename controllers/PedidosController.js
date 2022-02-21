@@ -1,4 +1,3 @@
-const { json } = require("express");
 const Pedidos = require("./../models/Pedidos");
 
 class PedidoController {
@@ -35,9 +34,25 @@ class PedidoController {
       !req.body.nomeEntregador
     ) {
       res.status(402).json({
-        message: `parametro(s)-necessario(s)-nulo(s)`,
+        message: `Parâmetro(s) necessário(s) nulo(s))`,
       });
       return;
+    }
+
+    if(id && id.length < 24){
+      res.status(400).json({
+        message: 'Parâmetro ID não corresponde com o padrão de 24 caracteres'
+      })
+      return;
+    }
+
+    for(let i of id){
+      if(i > 'f'){
+        res.status(400).json({
+          message: 'Paramêtro ID não corresponde com o padrão hexadecimal'
+        })
+        return;
+      }
     }
 
     const updatePedido = {
@@ -52,7 +67,7 @@ class PedidoController {
 
     if (!pedido) {
       res.status(406).json({
-        message: "pedido-inexistente",
+        message: "Pedido com ID fornecido é inexistente",
       });
       return;
     }
@@ -60,7 +75,7 @@ class PedidoController {
     await Pedidos.findByIdAndUpdate(id, updatePedido);
 
     res.json({
-      message: `pedido-${id}-atualizado`,
+      message: `Pedido com ID: ${id}, atualizado`,
       pedido: updatePedido,
     });
   }
@@ -80,25 +95,27 @@ class PedidoController {
           return;
       }
       const { id } = req.body
-    const pedido = await Pedidos.findByIdAndDelete(id)
-    if (!pedido){
+      const pedido = await Pedidos.findByIdAndDelete(id)
+      if (!pedido){
         res.status(402).json({message:"Pedido não existente!"})
         return;
-    }
+      }
 
       res.json({ message: "Pedido deletado!"})
   }
 
   static async verStatus(req, res) {
         
-        if (!req.body.nomeEntregador) {
+      if (!req.body.nomeEntregador) {
         res.status(402).json({ message: "Nome entregador necessário"})
+        return;
       }
       const nomeEntregador = req.body.nomeEntregador
 
       const pedido = await Pedidos.findOne({nomeEntregador})
       if (!pedido) {
           res.status(406).json({ message: "Não encontramos um pedido associado à esse entregador"})
+          return;
       }
       res.json({nome:pedido.nome , status:pedido.status});
   }
