@@ -131,6 +131,15 @@ class PedidoController {
       res.status(402).json({ message: "Parâmetro id nulo" });
       return;
     }
+    if(!pedido.nomeEntregador){
+      res.status(402).json({message: "O nome do entregador é nulo"})
+      return;
+    }
+    const verificarIdEntregador = await Pedidos.findById(id)
+    if(verificarIdEntregador !== pedido.nomeEntregador){
+    res.status(400).json({message: ` O ${verificarIdEntregador.nome} não pertence ao entregador ${pedido.nomeEntregador}`})
+    return;
+    }
     const procurarAttpedido = await Pedidos.findByIdAndUpdate(id, pedido);
     if (!procurarAttpedido) {
       res.status(402).json({ message: "Pedido não encontrado" });
