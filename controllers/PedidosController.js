@@ -34,7 +34,7 @@ class PedidoController {
       !req.body.nomeEntregador
     ) {
       res.status(402).json({
-        message: `Parâmetro(s) necessário(s) nulo(s))`,
+        message: `Parâmetro(s) necessário(s) nulo(s))`
       });
       return;
     }
