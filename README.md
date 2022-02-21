@@ -20,6 +20,11 @@
 
 <br/>
 
+> ## Documentação
+[Api Entregas](https://documenter.getpostman.com/view/18941413/UVkmPwgt)
+
+<br/>
+
 > ## Integrantes [Squad #05] 
 
 | [Igor Pedrosa](https://github.com/igorlap) | [Júlia Bassul](https://github.com/jubassul) | [Bruno Gomes](https://github.com/BrunodevOliveira) | [Bruna Gattei](https://github.com/brunagattei) | [Diego Zagalia](https://github.com/zagalia1984) |
