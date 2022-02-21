@@ -108,6 +108,7 @@ class PedidoController {
     const id = req.body.id;
     const pedido = {
       status: req.body.status,
+      nomeEntregador: req.body.nomeEntregador
     };
     if (!id) {
       res.status(402).json({ message: "Parâmetro id nulo" });
@@ -122,7 +123,7 @@ class PedidoController {
       res.status(402).json({ message: "Parâmetro status nulo" });
       return;
     }
-    res.status(200).json({ status: `Status alterado para ${pedido.status}` });
+    res.status(200).json({ status: `Entrega de ${pedido.nomeEntregador} alterou o status para ${pedido.status}` });
   }
 }
 
