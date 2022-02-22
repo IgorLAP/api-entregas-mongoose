@@ -16,6 +16,7 @@ const PedidoSchema = new Schema({
   status: {
     type: String,
     required: true,
+    default: "Em processamento"
   },
   nomeEntregador: {
     type: String,

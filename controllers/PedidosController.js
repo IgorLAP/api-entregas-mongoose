@@ -2,23 +2,22 @@ const Pedidos = require("./../models/Pedidos");
 
 class PedidoController {
     static async cadastrar(req, res) {
-        const { nome, dataDesejada, endereco, status, nomeEntregador } =
+        const { nome, dataDesejada, endereco, nomeEntregador } =
             req.body;
 
-        const pedido = Pedidos({
-            nome,
-            dataDesejada,
-            endereco,
-            status,
-            nomeEntregador,
-        });
-
-        if (!nome || !dataDesejada || !endereco || !status || !nomeEntregador) {
+        if (!nome || !dataDesejada || !endereco || !nomeEntregador) {
             res.status(402).json({
                 message: "Campos não preenchidos corretamente",
             });
             return;
         }
+        
+        const pedido = Pedidos({
+            nome,
+            dataDesejada,
+            endereco,
+            nomeEntregador,
+        });
 
         await pedido.save();
 
@@ -37,7 +36,7 @@ class PedidoController {
             !req.body.nomeEntregador
         ) {
             res.status(402).json({
-                message: `Parâmetro(s) necessário(s) nulo(s))`,
+                message: `Parâmetro(s) necessário(s) nulo(s)`,
             });
             return;
         }
@@ -71,7 +70,7 @@ class PedidoController {
         const pedido = await Pedidos.findById(id);
 
         if (!pedido) {
-            res.status(406).json({
+            res.status(404).json({
                 message: "Pedido com ID fornecido é inexistente",
             });
             return;
@@ -142,9 +141,9 @@ class PedidoController {
             return;
         }
         const verificarIdEntregador = await Pedidos.findById(id);
-        if (verificarIdEntregador !== pedido.nomeEntregador) {
+        if (verificarIdEntregador.nomeEntregador !== pedido.nomeEntregador) {
             res.status(400).json({
-                message: ` O ${verificarIdEntregador.nome} não pertence ao entregador ${pedido.nomeEntregador}`,
+                message: `Pedido: ${verificarIdEntregador.nome} não pertence ao entregador ${pedido.nomeEntregador}`,
             });
             return;
         }
